@@ -1,0 +1,28 @@
+{
+  "name": "nodejs-express-rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/main.ts",
+    "start": "node src/main.ts",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisCodeX/NodeJS-Express-REST-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrisCodeX/NodeJS-Express-REST-API/issues"
+  },
+  "homepage": "https://github.com/ChrisCodeX/NodeJS-Express-REST-API#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
