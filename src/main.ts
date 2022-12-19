@@ -38,6 +38,15 @@ app.get('/v2/products/:id', (req, res)=>{
   });
 });
 
+/* Get more than 1 parameter */
+app.get('/categories/:categoryId/products/:productId', (req, res)=>{
+  const {categoryId, productId} = req.params;
+  res.json({
+    categoryId,
+    productId
+  });
+});
+
 
 /* Listen message */
 console.log('listening on port:', port);
