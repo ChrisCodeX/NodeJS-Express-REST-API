@@ -9,4 +9,11 @@ app.get('/', (req, res)=>{
   res.send('Hello, the server was made in express');
 });
 
+app.get('/products', (req, res)=>{
+  res.json({
+    name: 'product1',
+    price: 32
+  });
+});
+
 app.listen(port);

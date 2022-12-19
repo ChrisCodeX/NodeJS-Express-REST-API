@@ -31,8 +31,8 @@ module.exports = {
 			'error',
 			'always'
 		],
-    'no-console': [
-      'warn'
-    ]
+    // 'no-console': [
+    //   'warn'
+    // ]
 	}
 };
