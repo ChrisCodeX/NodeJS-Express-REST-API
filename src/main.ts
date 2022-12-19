@@ -48,12 +48,21 @@ app.get('/categories/:categoryId/products/:productId', (req, res)=>{
 });
 
 /* Examples */
+// User endpoint
 app.get('/v1/user/:id', (req,res)=>{
   const {id} = req.params;
   res.json({
     id,
     name: 'Christian',
     age: 24
+  });
+});
+// Product detail
+app.get('/v1/product/:id/detail', (req, res)=>{
+  const idProduct = req.params.id;
+  res.json({
+    id: idProduct,
+    name: `Product ${idProduct}`
   });
 });
 
