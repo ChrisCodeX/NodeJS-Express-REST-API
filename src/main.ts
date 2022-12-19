@@ -47,6 +47,15 @@ app.get('/categories/:categoryId/products/:productId', (req, res)=>{
   });
 });
 
+/* Examples */
+app.get('/v1/user/:id', (req,res)=>{
+  const {id} = req.params;
+  res.json({
+    id,
+    name: 'Christian',
+    age: 24
+  });
+});
 
 /* Listen message */
 console.log('listening on port:', port);
