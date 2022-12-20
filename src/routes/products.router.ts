@@ -8,53 +8,82 @@ const productService = new ProductService();
 
 /* Products endpoints */
 
-/* Query parameters */
+// Query parameters
 // Uri: /products?size=xx
-router.get('/',(req, res)=>{
-  const products = productService.products
-  res.status(200).json(
-    products
-  );
+router.get('/',async (req, res)=>{
+  try {
+    const products = await productService.find()
+    res.status(200).json(products);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  }
 });
 
-/* Get a parameter from request */
+// Get a parameter from request
 // Way 1
-router.get('/:idProduct', (req, res) => {
-  const idProd = req.params.idProduct;
+router.get('/:idProduct',async (req, res) => {
+  try {
+    const idProd = req.params.idProduct;
 
-  const product = productService.findOne(idProd)
-  res.json(product);
-});
-
-
-
-// Product detail
-router.get('/:id/detail', (req, res)=>{
-  const idProduct = req.params.id;
-  res.json({
-    id: idProduct,
-    name: `Product ${idProduct}`
-  });
+    const product = await productService.findOne(idProd)
+    res.status(200).json(product);
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  }
 });
 
 /* Post Methods */
-router.post('/', (req, res) => {
-  const body = req.body
-  const newProduct = productService.create(body);
-  res.status(201).json(newProduct)
+router.post('/',async (req, res) => {
+  try {
+    const body = req.body
+    const newProduct = await productService.create(body);
+    res.status(201).json(newProduct)
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  }
 })
 
 /* Patch Methods */
-router.patch('/:id', (req, res) => {
-  const body = req.body
-  const {id} = req.params
-  const product = productService.update(id, body)
-  res.json(product)
+router.patch('/:id',async (req, res) => {
+  try {
+    const body = req.body
+    const {id} = req.params
+    const product = await productService.update(id, body)
+    res.status(200).json(product)
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  }
 })
 
 /* Delete Methods */
-router.delete('/:id', (req, res) => {
-  const {id} = req.params
-  const product = productService.delete(id)
-  res.json(product)
+router.delete('/:id',async (req, res) => {
+  try {
+    const {id} = req.params
+    const product = await productService.delete(id);
+    res.status(200).json({
+     id: product
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(404).json({
+        message: error.message
+      })
+    }
+  }
 })
