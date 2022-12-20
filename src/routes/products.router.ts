@@ -13,9 +13,9 @@ const productService = new ProductService();
 // Uri: /products?size=xx
 router.get('/',(req, res)=>{
   const products = productService.products
-  res.status(200).json({
+  res.status(200).json(
     products
-  });
+  );
 });
 
 // product root endpoint - No se mostrará debido a que el router de arriba está
@@ -29,23 +29,15 @@ router.get('/', (req, res)=>{
 
 /* Get a parameter from request */
 // Way 1
-router.get('/:idProduct',(req, res)=>{
+router.get('/:idProduct', (req, res) => {
+
   const idProd = req.params.idProduct;
+
   /* Other way - Desestructuración*/
   // const {idProduct} = req.params
 
-  if (parseInt(idProd) >= 100) {
-    res.status(404).json({
-      message: 'not found'
-    })
-  } else {
-    res.json(
-      {
-        idProduct: idProd,
-        name: `Product ${idProd}`
-      }
-    );
-  }
+  const product = productService.findOne(idProd)
+  res.json(product);
 });
 
 

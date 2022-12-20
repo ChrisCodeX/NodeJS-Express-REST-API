@@ -13,7 +13,7 @@ export class ProductService {
     for (let i = 0; i < parseInt(limit.toString(), 10); i++) {
       this.products.push(
         {
-          id: i,
+          id: faker.datatype.uuid(),
           name: faker.commerce.productName(),
           price: parseInt(faker.commerce.price(1, 1000), 10),
           imageUrl: faker.image.imageUrl()
@@ -30,8 +30,8 @@ export class ProductService {
     return this.products
   }
 
-  findOne() {
-  //
+  findOne(id: string) {
+    return this.products.find(item => item.id === id)
   }
 
   update() {
