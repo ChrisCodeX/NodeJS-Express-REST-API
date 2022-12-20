@@ -1,27 +1,21 @@
 import express from 'express';
 import faker from 'faker';
+import { ProductService } from '../services/product.service';
 
 /* Router */
 export const router = express.Router();
 
+const productService = new ProductService();
+
 /* Products endpoints */
+
 /* Query parameters */
 // Uri: /products?size=xx
 router.get('/',(req, res)=>{
-  const {size} = req.query
-  const limit = size || 10
-  const products = [];
-  for (let i = 0; i < parseInt(limit.toString(), 10); i++){
-    products.push(
-      {
-        id: i,
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(1, 1000),10),
-        imageUrl: faker.image.imageUrl()
-      }
-    );
-  }
-  res.json(products);
+  const products = productService.products
+  res.status(200).json({
+    products
+  });
 });
 
 // product root endpoint - No se mostrará debido a que el router de arriba está
@@ -39,18 +33,25 @@ router.get('/:idProduct',(req, res)=>{
   const idProd = req.params.idProduct;
   /* Other way - Desestructuración*/
   // const {idProduct} = req.params
-  res.json(
-    {
-      idProduct: idProd,
-      name: `Product ${idProd}`
-    }
-  );
+
+  if (parseInt(idProd) >= 100) {
+    res.status(404).json({
+      message: 'not found'
+    })
+  } else {
+    res.json(
+      {
+        idProduct: idProd,
+        name: `Product ${idProd}`
+      }
+    );
+  }
 });
 
 
 
 // Product detail
-router.get('/v1/products/:id/detail', (req, res)=>{
+router.get('/:id/detail', (req, res)=>{
   const idProduct = req.params.id;
   res.json({
     id: idProduct,
@@ -58,17 +59,30 @@ router.get('/v1/products/:id/detail', (req, res)=>{
   });
 });
 
-// Uri: /v1/products?limit=xx&&offset=xx
-// router.get('/v1/products', (req, res) => {
-//   const { limit, offset } = req.query;
-//   if (limit && offset) {
-//     res.json({
-//       limit,
-//       offset
-//     });
-//   } else {
-//     res.send(
-//       res.send('No hay parámetros')
-//     );
-//   }
-// });
+/* Post Methods */
+router.post('/', (req, res) => {
+  const body = req.body
+  res.status(201).json({
+    message: body
+  })
+})
+
+/* Patch Methods */
+router.patch('/:id', (req, res) => {
+  const body = req.body
+  const {id} = req.params
+  res.json({
+    message: 'updated',
+    data: body,
+    id: id
+  })
+})
+
+/* Delete Methods */
+router.delete('/:id', (req, res) => {
+  const {id} = req.params
+  res.json({
+    message: 'deleted',
+    id: id
+  })
+})

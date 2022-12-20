@@ -1,9 +1,11 @@
 import express from 'express';
-import { routerApi } from './routes';
+import { routerApi } from './server';
 
 const app = express();
 
 const port = 3000;
+
+app.use(express.json());
 
 /* Routes assigned to application instance */
 routerApi(app);
