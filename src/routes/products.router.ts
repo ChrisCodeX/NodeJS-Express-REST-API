@@ -1,6 +1,5 @@
 import express from 'express';
-import faker from 'faker';
-import { ProductService } from '../services/product.service';
+import { ProductService } from '../services/products.service';
 
 /* Router */
 export const router = express.Router();
@@ -16,15 +15,6 @@ router.get('/',(req, res)=>{
   res.status(200).json(
     products
   );
-});
-
-// product root endpoint - No se mostrará debido a que el router de arriba está
-// en primer orden
-router.get('/', (req, res)=>{
-  res.json({
-    name: 'product1',
-    price: 32
-  });
 });
 
 /* Get a parameter from request */

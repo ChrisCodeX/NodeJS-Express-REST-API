@@ -2,7 +2,7 @@ import faker from 'faker';
 import { Product } from '../models/products.model';
 
 export class ProductService {
-  products: Product[]
+  public products: Product[]
   constructor(){
     this.products = []
     this.generate();
