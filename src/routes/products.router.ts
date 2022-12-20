@@ -20,11 +20,7 @@ router.get('/',(req, res)=>{
 /* Get a parameter from request */
 // Way 1
 router.get('/:idProduct', (req, res) => {
-
   const idProd = req.params.idProduct;
-
-  /* Other way - Desestructuración*/
-  // const {idProduct} = req.params
 
   const product = productService.findOne(idProd)
   res.json(product);
@@ -44,27 +40,21 @@ router.get('/:id/detail', (req, res)=>{
 /* Post Methods */
 router.post('/', (req, res) => {
   const body = req.body
-  res.status(201).json({
-    message: body
-  })
+  const newProduct = productService.create(body);
+  res.status(201).json(newProduct)
 })
 
 /* Patch Methods */
 router.patch('/:id', (req, res) => {
   const body = req.body
   const {id} = req.params
-  res.json({
-    message: 'updated',
-    data: body,
-    id: id
-  })
+  const product = productService.update(id, body)
+  res.json(product)
 })
 
 /* Delete Methods */
 router.delete('/:id', (req, res) => {
   const {id} = req.params
-  res.json({
-    message: 'deleted',
-    id: id
-  })
+  const product = productService.delete(id)
+  res.json(product)
 })

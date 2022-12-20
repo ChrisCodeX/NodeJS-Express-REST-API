@@ -18,4 +18,9 @@ export class UsersService {
       })
     }
   }
+
+  public create(data: User) {
+    this.users.push(data)
+    return data
+  }
 }

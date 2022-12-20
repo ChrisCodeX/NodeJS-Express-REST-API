@@ -22,11 +22,16 @@ export class ProductService {
     }
   }
 
-  create() {
-  //
+  public create(data: Product) {
+    const newProduct = {
+      id: faker.datatype.uuid(),
+      ...data
+    }
+    this.products.push(newProduct);
+    return newProduct;
   }
 
-  find() {
+  public find() {
     return this.products
   }
 
@@ -34,11 +39,27 @@ export class ProductService {
     return this.products.find(item => item.id === id)
   }
 
-  update() {
-    //
+  public update(id: string, changes: any) {
+    const index = this.products.findIndex(item => item.id === id);
+    if (index === -1) {
+      throw new Error('product not found')
+    }
+
+    const product = this.products[index]
+    this.products[index] = {
+      ...product,
+      ...changes
+    }
+    return this.products[index]
   }
 
-  delete() {
-    //
+  delete(id: string) {
+    const index = this.products.findIndex(item => item.id === id);
+    if (index === -1) {
+      throw new Error('product not found')
+    }
+
+    this.products.splice(index, 1)
+    return { id };
   }
 }
