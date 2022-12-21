@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import boom from '@hapi/boom'
 
 export function logErrors (err: Error, req: Request, res: Response, next: NextFunction) {
   console.log('log')
@@ -6,7 +7,7 @@ export function logErrors (err: Error, req: Request, res: Response, next: NextFu
   next(err)
 }
 
-export function boomErrorHandler(err: any, req: Request, res: Response, next: NextFunction) {
+export function boomErrorHandler(err: boom.Boom, req: Request, res: Response, next: NextFunction) {
   if (err.isBoom) {
     console.log('Boom')
     const {output} = err;

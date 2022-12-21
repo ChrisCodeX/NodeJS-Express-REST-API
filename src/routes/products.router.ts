@@ -73,16 +73,18 @@ router.patch('/:id',
   })
 
 /* Delete Methods */
-router.delete('/:id',async (req, res, next) => {
-  try {
-    const {id} = req.params
-    const product = await productService.delete(id);
-    res.status(200).json({
-     id: product
-    });
-  } catch (error) {
-    if (error instanceof Error) {
-      next(error)
+router.delete('/:id',
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const product = await productService.delete(id);
+      res.status(200).json({
+        id: product
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error)
+      }
     }
-  }
-})
+  })

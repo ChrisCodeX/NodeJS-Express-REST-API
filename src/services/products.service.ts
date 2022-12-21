@@ -43,7 +43,7 @@ export class ProductService {
   }
 
   public async find() {
-    return new Promise<Product[]>((resolve, reject) => {
+    return new Promise<Product[]>((resolve) => {
       setTimeout(() => {
         resolve(this.products)
       }, 1000);
