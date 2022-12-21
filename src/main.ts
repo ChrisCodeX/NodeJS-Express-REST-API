@@ -1,6 +1,6 @@
 import express from 'express';
 import { routerApi } from './routes';
-import { logErrors, errorHandler } from './middleware/error.handler';
+import { logErrors, errorHandler, boomErrorHandler } from './middleware/error.handler';
 
 const app = express();
 
@@ -16,6 +16,7 @@ Otros middlewares van delante
 */
 
 app.use(logErrors)
+app.use(boomErrorHandler)
 app.use(errorHandler)
 
 /* Listen message */

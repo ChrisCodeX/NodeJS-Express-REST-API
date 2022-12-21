@@ -10,15 +10,13 @@ const productService = new ProductService();
 
 // Query parameters
 // Uri: /products?size=xx
-router.get('/',async (req, res)=>{
+router.get('/',async (req, res, next)=>{
   try {
     const products = await productService.find()
     res.status(200).json(products);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({
-        message: error.message
-      })
+      next(error)
     }
   }
 });
@@ -39,22 +37,20 @@ router.get('/:idProduct',async (req, res, next) => {
 });
 
 /* Post Methods */
-router.post('/',async (req, res) => {
+router.post('/',async (req, res, next) => {
   try {
     const body = req.body
     const newProduct = await productService.create(body);
     res.status(201).json(newProduct)
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({
-        message: error.message
-      })
+      next(error)
     }
   }
 })
 
 /* Patch Methods */
-router.patch('/:id',async (req, res) => {
+router.patch('/:id',async (req, res, next) => {
   try {
     const body = req.body
     const {id} = req.params
@@ -62,15 +58,13 @@ router.patch('/:id',async (req, res) => {
     res.status(200).json(product)
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({
-        message: error.message
-      })
+      next(error)
     }
   }
 })
 
 /* Delete Methods */
-router.delete('/:id',async (req, res) => {
+router.delete('/:id',async (req, res, next) => {
   try {
     const {id} = req.params
     const product = await productService.delete(id);
@@ -79,9 +73,7 @@ router.delete('/:id',async (req, res) => {
     });
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({
-        message: error.message
-      })
+      next(error)
     }
   }
 })
