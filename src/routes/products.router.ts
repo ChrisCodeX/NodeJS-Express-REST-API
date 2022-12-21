@@ -25,17 +25,15 @@ router.get('/',async (req, res)=>{
 
 // Get a parameter from request
 // Way 1
-router.get('/:idProduct',async (req, res) => {
+router.get('/:idProduct',async (req, res, next) => {
   try {
     const idProd = req.params.idProduct;
-
     const product = await productService.findOne(idProd)
+
     res.status(200).json(product);
   } catch (error) {
     if (error instanceof Error) {
-      res.status(404).json({
-        message: error.message
-      })
+      next(error)
     }
   }
 });

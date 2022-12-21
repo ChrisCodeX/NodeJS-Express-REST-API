@@ -45,6 +45,7 @@ export class ProductService {
   }
 
   public async findOne(id: string) {
+    throw new Error('Error papu')
     return new Promise<Product | undefined>((resolve, reject) => {
       setTimeout(() => {
         resolve(this.products.find(item => item.id === id))
