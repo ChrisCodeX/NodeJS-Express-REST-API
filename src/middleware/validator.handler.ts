@@ -5,9 +5,10 @@ import joi from 'joi'
 export function validatorHandler(schema: joi.ObjectSchema, property: keyof Request) {
   return function (req: Request, res: Response, next: NextFunction) {
     const data = req[property]
-    const error = schema.validate(data);
-    if (error.error) {
-      next(boom.badRequest(error.error.message));
+    const {error} = schema.validate(data);
+    console.log(error)
+    if (error) {
+      next(boom.badRequest(error.message));
     }
     next()
   }
