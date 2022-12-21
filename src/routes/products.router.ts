@@ -1,5 +1,7 @@
 import express from 'express';
 import { ProductService } from '../services/products.service';
+import { validatorHandler } from '../middleware/validator.handler';
+import { createProductSchema, updateProductSchema, getProductSchema } from '../schemas/product.schema';
 
 /* Router */
 export const router = express.Router();
@@ -22,46 +24,53 @@ router.get('/',async (req, res, next)=>{
 });
 
 // Get a parameter from request
-// Way 1
-router.get('/:idProduct',async (req, res, next) => {
-  try {
-    const idProd = req.params.idProduct;
-    const product = await productService.findOne(idProd)
+router.get('/:idProduct',
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    try {
+      const idProd = req.params.idProduct;
+      const product = await productService.findOne(idProd)
 
-    res.status(200).json(product);
-  } catch (error) {
-    if (error instanceof Error) {
-      next(error)
+      res.status(200).json(product);
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error)
+      }
     }
-  }
-});
+  });
 
 /* Post Methods */
-router.post('/',async (req, res, next) => {
-  try {
-    const body = req.body
-    const newProduct = await productService.create(body);
-    res.status(201).json(newProduct)
-  } catch (error) {
-    if (error instanceof Error) {
-      next(error)
+router.post('/',
+  validatorHandler(createProductSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body
+      const newProduct = await productService.create(body);
+      res.status(201).json(newProduct)
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error)
+      }
     }
-  }
-})
+  })
 
 /* Patch Methods */
-router.patch('/:id',async (req, res, next) => {
-  try {
-    const body = req.body
-    const {id} = req.params
-    const product = await productService.update(id, body)
-    res.status(200).json(product)
-  } catch (error) {
-    if (error instanceof Error) {
-      next(error)
+router.patch('/:id',
+  validatorHandler(getProductSchema, 'params'),
+  validatorHandler(updateProductSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body
+      console.log(body)
+      const { id } = req.params
+      const product = await productService.update(id, body)
+      res.status(200).json(product)
+    } catch (error) {
+      if (error instanceof Error) {
+        next(error)
+      }
     }
-  }
-})
+  })
 
 /* Delete Methods */
 router.delete('/:id',async (req, res, next) => {
