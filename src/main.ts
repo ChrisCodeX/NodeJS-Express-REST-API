@@ -7,7 +7,7 @@ const app = express();
 
 const port = 3000;
 
-/* Recibir solicitudes en formato JSON */
+/* Middleware que permite recibir las peticiones en formato json */
 app.use(express.json());
 
 /* Configurar el acceso a la API desde cualquier dominio */
